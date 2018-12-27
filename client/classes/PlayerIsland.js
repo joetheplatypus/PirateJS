@@ -5,7 +5,7 @@ import Player from './Player.js';
 import GUITextNode from './GUITextNode.js';
 import GUIButton from './GUIButton.js';
 
-export default class Island extends GameObject {
+export default class PlayerIsland extends GameObject {
   constructor(params) {
     super(params);
     this.showGUI = false;

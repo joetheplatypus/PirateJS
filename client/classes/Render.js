@@ -14,8 +14,9 @@ const render =  {
     flag: new Image(),
     sprites: new Map([
       ['cannon',[88,422, 29, 16]],
-      ['dinghySmall1',[628,166,16,26]],
+      ['explorerShip',[628,166,16,26]],
       ['startupShip',[408,0,66,113]],
+      ['woodShip',[408,0,66,113]],
     ]),
     tiles: new Map([
       ['islandTopLeft',[0,0]],

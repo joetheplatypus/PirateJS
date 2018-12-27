@@ -1,4 +1,5 @@
-const Island = require('./Island')
+const PlayerIsland = require('./PlayerIsland')
+const WoodIsland = require('./WoodIsland')
 
 module.exports = {
   tileWidth: 400,
@@ -13,10 +14,19 @@ module.exports = {
     for(var i = 0; i < this.chunkHeight; i++) {
       this.islandMap.push(new Array(this.chunkWidth))
       for(var j = 0; j < this.chunkWidth; j++) {
-        const island = new Island({
-          x: (j*this.chunkSize + Math.random()*this.chunkSize)*this.tileSize,
-          y: (i*this.chunkSize + Math.random()*this.chunkSize)*this.tileSize
-        })
+		  let island = null
+		  if(Math.random() > 0.5) {
+			island = new PlayerIsland({
+			  x: (j*this.chunkSize + Math.random()*this.chunkSize)*this.tileSize,
+			  y: (i*this.chunkSize + Math.random()*this.chunkSize)*this.tileSize
+			})
+		  } else {
+			island = new WoodIsland({
+			  x: (j*this.chunkSize + Math.random()*this.chunkSize)*this.tileSize,
+			  y: (i*this.chunkSize + Math.random()*this.chunkSize)*this.tileSize
+			})
+		  }
+        
         this.islandMap[i][j] = island
       }
     }

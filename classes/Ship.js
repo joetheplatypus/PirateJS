@@ -1,4 +1,5 @@
 const Entity = require('./Entity');
+const GameObject = require('./GameObject')
 
 class Ship extends Entity {
   constructor(params) {
@@ -19,6 +20,8 @@ class Ship extends Entity {
       right: false,
       left: false,
     }
+	
+	this.parentID = params.parentID
 
 
   }
@@ -118,6 +121,16 @@ class Ship extends Entity {
     this.input.down = input.down
     this.input.left = input.left
     this.input.right = input.right
+  }
+  static removeAllOwnedByPlayer(id) {
+	  for(var i = 0; i < GameObject.list.length; i++) {
+		  if(!(GameObject.list[i] instanceof Ship)) {
+			  continue;
+		  }
+		  if(GameObject.list[i].parentID === id) {
+			  GameObject.remove(GameObject.list[i])
+		  }
+	  }
   }
 }
 module.exports = Ship

@@ -1,8 +1,12 @@
-const GameObject = require('./GameObject');
+const Island = require('./Island');
 
-class Island extends GameObject {
+class PlayerIsland extends Island {
   constructor(params) {
     super(params);
+    this.ownerID = null
+	this.claimable = true
+    this.className = 'PlayerIsland'
+    this.sendInitPack()
   }
   getInitPack() {
     return {
@@ -11,6 +15,7 @@ class Island extends GameObject {
       y: this.y,
       rotation: this.rotation,
       className: this.className,
+      ownerID: this.ownerID
     }
   }
   getUpdatePack() {
@@ -19,7 +24,11 @@ class Island extends GameObject {
       x: this.x,
       y: this.y,
       rotation: this.rotation,
+      ownerID: this.ownerID
     }
   }
+  setOwnerID(owner) {
+    this.ownerID = owner
+  }
 }
-module.exports = Island
+module.exports = PlayerIsland

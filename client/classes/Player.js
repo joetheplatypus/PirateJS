@@ -8,6 +8,7 @@ export default class Player extends GameObject{
     this.controllingID = params.controllingID
     this.ships = params.ships
     this.island = params.island
+	this.tradeRoutes = params.tradeRoutes
 
   }
   update(params) {
@@ -15,6 +16,7 @@ export default class Player extends GameObject{
     this.controllingID = params.controllingID
     this.ships = params.ships
     this.island = params.island
+	this.tradeRoutes = params.tradeRoutes
 
     if(this.id === Player.selfID) {
       if(this.controllingID) {
@@ -24,6 +26,7 @@ export default class Player extends GameObject{
     }
   }
   draw() {
+	  
   }
 }
 Player.selfID = null;

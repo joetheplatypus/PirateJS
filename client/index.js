@@ -5,10 +5,13 @@ import GameObject from './classes/GameObject.js'
 import Camera from './classes/Camera.js'
 import Ship from './classes/Ship.js'
 import StartupShip from './classes/StartupShip.js'
-import Island from './classes/Island.js';
+import ExplorerShip from './classes/ExplorerShip.js'
+import WoodShip from './classes/WoodShip.js'
+import PlayerIsland from './classes/PlayerIsland.js';
+import WoodIsland from './classes/WoodIsland.js';
 import GUI from './classes/GUI.js';
 
-const classMap = new Map([['Player', Player],['Ship', Ship],['Island', Island],['StartupShip', StartupShip]])
+const classMap = new Map([['Player', Player],['Ship', Ship],['PlayerIsland', PlayerIsland],['WoodIsland', WoodIsland],['StartupShip', StartupShip],['ExplorerShip', ExplorerShip],['WoodShip', WoodShip]])
 
 //Socket Setup
 const socket = io();
@@ -37,6 +40,7 @@ socket.on('selfId',(id) => {
 socket.on('init',(data) => {
   data.map((obj) => {
     if(!GameObject.fromID(obj.id)) {
+		
       let classToInstantiate = classMap.get(obj.className);
       new classToInstantiate(obj)
     }
@@ -65,36 +69,50 @@ const input = {
   left: false,
   up: false,
   down: false,
+  space: false,
+  use: false,
 }
 
 document.onkeydown = function(event) {
-  if(event.keyCode === 68) { // D
+  if(event.keyCode === 68 && !input.right) { // D
+	input.right = true;
     socket.emit('keyPress', {inputId:'right',state:true});
-  } else if(event.keyCode === 83) { //S
+  } else if(event.keyCode === 83 && !input.down) { //S
+	input.down = true
     socket.emit('keyPress', {inputId:'down',state:true});
-  } else if(event.keyCode === 65) { //A
+  } else if(event.keyCode === 65 && !input.left) { //A
+	input.left = true
     socket.emit('keyPress', {inputId:'left',state:true});
-  } else if(event.keyCode === 87) { //W
+  } else if(event.keyCode === 87 && !input.up) { //W
+	input.up = true
     socket.emit('keyPress', {inputId:'up',state:true});
-  } else if(event.keyCode === 32) { //SPACEBAR
+  } else if(event.keyCode === 32 && !input.space) { //SPACEBAR
+	input.space = true
     socket.emit('keyPress', {inputId:'space',state:true});
-  } else if(event.keyCode === 69) { //E
+  } else if(event.keyCode === 69 && !input.use) { //E
+	input.use = true
     socket.emit('keyPress', {inputId:'use',state:true});
   }
 }
 
 document.onkeyup = function(event) {
-  if(event.keyCode === 68) { // D
+  if(event.keyCode === 68 && input.right) { // D
+	input.right = false
     socket.emit('keyPress', {inputId:'right',state:false});
-  } else if(event.keyCode === 83) { //S
+  } else if(event.keyCode === 83 && input.down) { //S
+	input.down = false
     socket.emit('keyPress', {inputId:'down',state:false});
-  } else if(event.keyCode === 65) { //A
+  } else if(event.keyCode === 65 && input.left) { //A
+	input.left = false
     socket.emit('keyPress', {inputId:'left',state:false});
-  } else if(event.keyCode === 87) { //W
+  } else if(event.keyCode === 87 && input.up) { //W
+	input.up = false
     socket.emit('keyPress', {inputId:'up',state:false});
-  } else if(event.keyCode === 32) { //SPACEBAR
+  } else if(event.keyCode === 32 && input.space) { //SPACEBAR
+	input.space = false
     socket.emit('keyPress', {inputId:'space',state:false});
-  } else if(event.keyCode === 69) { //E
+  } else if(event.keyCode === 69 && input.use) { //E
+	input.use = false
     socket.emit('keyPress', {inputId:'use',state:false});
   }
 }
