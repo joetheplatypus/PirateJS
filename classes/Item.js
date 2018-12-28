@@ -3,4 +3,5 @@ class Item {
 		this.name = name
 	}
 }
+Item.wood = new Item('wood')
 module.exports = Item

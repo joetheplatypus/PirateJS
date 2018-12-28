@@ -68,6 +68,19 @@ class Player extends GameObject {
 	  this.tradeRoutes.push(route)
 	  island.tradeRoutes.push(route)
   }
+  loadShip({islandID,shipID}) {
+	  const island = GameObject.fromID(islandID)
+	  const ship = GameObject.fromID(shipID)
+	  if(island.loadable && island.canTradeWithPlayer(this.id) && ship.parentID === this.id) {
+		  ship.load(island)
+	  }
+  }
+  unloadShip(shipID) {
+	  const ship = GameObject.fromID(shipID)
+	  if(ship.parentID === this.id) {
+		  ship.unload(this.island)
+	  }
+  }
   handleInput({ inputId, state }) {
     if(inputId == 'up') {
       this.input.up = state
@@ -137,6 +150,14 @@ class Player extends GameObject {
 	
 	socket.on('openTradeRoute',(islandID) => {
 		p.openTradeRoute(islandID)
+	})
+	
+	socket.on('loadShip', ({islandID,shipID}) => {
+		p.loadShip({islandID:islandID,shipID:shipID})
+	})
+	
+	socket.on('unloadShip', (shipID) => {
+	  p.unloadShip(shipID)
 	})
 
     socket.emit('selfId', p.id)

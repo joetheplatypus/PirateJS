@@ -16,7 +16,7 @@ const render =  {
       ['cannon',[88,422, 29, 16]],
       ['explorerShip',[628,166,16,26]],
       ['startupShip',[408,0,66,113]],
-      ['woodShip',[408,0,66,113]],
+      ['woodShip',[612,0,40,108]],
     ]),
     tiles: new Map([
       ['islandTopLeft',[0,0]],
@@ -28,6 +28,9 @@ const render =  {
       ['islandBottomLeft',[0,128]],
       ['islandBottomMiddle',[64,128]],
       ['islandBottomRight',[128,128]],
+	  ['bigTree',[384,256]],
+	  ['smallTree',[448,256]],
+	  ['smallTrees',[448,320]],
       ])
 
   },
@@ -45,6 +48,9 @@ const render =  {
   drawSpritesheetImage(x,y,rot,imageRef, centre) {
     const cameraPos = Camera.getPos();
     const image = this.images.sprites.get(imageRef)
+	if(!Camera.isOnScreen({x:x,y:y}) && !Camera.isOnScreen({x:x+image.width,y:y+image.height}) && !Camera.isOnScreen({x:x,y:y+image.height}) && !Camera.isOnScreen({x:x+image.width,y:y})) {
+		return
+	}
     this.ctx.save()
     this.ctx.translate(Math.floor(x-cameraPos.x), Math.floor(y-cameraPos.y))
     this.ctx.rotate(rot)
@@ -55,6 +61,9 @@ const render =  {
     this.ctx.restore()
   },
   drawTilesheetImage(x,y,rot,imageNum, centre) {
+	if(!Camera.isOnScreen({x:x,y:y}) && !Camera.isOnScreen({x:x+this.tileSize,y:y+this.tileSize}) && !Camera.isOnScreen({x:x,y:y+this.tileSize}) && !Camera.isOnScreen({x:x+this.tileSize,y:y})) {
+		return
+	}
     const cameraPos = Camera.getPos();
     const image = this.images.tiles.get(imageNum)
     this.ctx.save()

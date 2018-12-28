@@ -5,6 +5,7 @@ const Item = require('./Item')
 class WoodIsland extends Island {
 	constructor(params) {
 		super(params)
+		this.loadable = true
 		this.resourceType = 'wood'
 		this.tradeRoutes = []
 		this.inventory = new Inventory()
@@ -13,8 +14,14 @@ class WoodIsland extends Island {
 	}
 	update() {
 		if(this.tradeRoutes.length > 0) {
-			this.inventory.addItem(new Item('wood'))
+			this.inventory.addItem(Item.wood)
 		}
+	}
+	canTradeWithPlayer(id) {
+		if(this.tradeRoutes.find((route) => route.playerID == id)) {
+			return true
+		}
+		return false
 	}
 	getInitPack() {
 	return {

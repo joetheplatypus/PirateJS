@@ -25,5 +25,13 @@ class Inventory {
 			return;
 		}
 	}
+	hasItem(item) {
+		const ref = this.items.find((obj) => obj.item.name === item.name)
+		if(ref) {
+			return true
+		} else {
+			return false
+		}
+	}
 }
 module.exports = Inventory

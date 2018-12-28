@@ -1,10 +1,12 @@
 const Island = require('./Island');
+const Inventory = require('./Inventory')
 
 class PlayerIsland extends Island {
   constructor(params) {
     super(params);
     this.ownerID = null
 	this.claimable = true
+	this.inventory = new Inventory()
     this.className = 'PlayerIsland'
     this.sendInitPack()
   }
@@ -15,7 +17,8 @@ class PlayerIsland extends Island {
       y: this.y,
       rotation: this.rotation,
       className: this.className,
-      ownerID: this.ownerID
+      ownerID: this.ownerID,
+	  inventory: this.inventory
     }
   }
   getUpdatePack() {
@@ -24,7 +27,8 @@ class PlayerIsland extends Island {
       x: this.x,
       y: this.y,
       rotation: this.rotation,
-      ownerID: this.ownerID
+      ownerID: this.ownerID,
+	  inventory: this.inventory
     }
   }
   setOwnerID(owner) {

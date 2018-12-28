@@ -4,7 +4,7 @@ import Render from './Render.js'
 export default class Ship extends Entity {
   constructor(params) {
     super(params);
-    
+	this.parentID = params.parentID
   }
   update(params) {
     super.update(params)

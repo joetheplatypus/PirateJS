@@ -8,6 +8,9 @@ export default class GUI {
   updatePos() {
 
   }
+  updateFocus(focus) {
+	  this.focus = focus
+  }
   static updateAll() {
     GUI.list.map((gui) => {
       const newPos = Camera.absoluteToRelative(gui.focus)

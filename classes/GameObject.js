@@ -38,6 +38,9 @@ class GameObject {
       rotation: this.rotation,
     }
   }
+  getDistanceToPoint({x,y}) {
+    return Math.sqrt(Math.pow(x-this.x,2) + Math.pow(y-this.y,2))
+  }
   static remove(object) {
     const id = object.id
     GameObject.removePack.push(id);
@@ -70,6 +73,25 @@ class GameObject {
   }
   static fromID(id) {
     return GameObject.list.find(obj => obj.id == id)
+  }
+  static getInstancesOf(theClass) {
+	  return GameObject.list.filter(go => go instanceof theClass)
+  }
+  static getNearestInstanceOf(theClass, {x,y}) {
+	  let nearest = null
+	  for(var i = 0; i < GameObject.list.length; i++) {
+		  if(GameObject.list[i] instanceof theClass) {
+			  if(!nearest) {
+				  nearest = GameObject.list[i]
+				  continue
+			  }
+			  if(GameObject.list[i].getDistanceToPoint({x:x,y:y}) < nearest.getDistanceToPoint({x:x,y:y})) {
+				  nearest = GameObject.list[i]
+			  }
+		  }
+		  
+	  }
+	  return nearest
   }
 }
 GameObject.initPack = [];
