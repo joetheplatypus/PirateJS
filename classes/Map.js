@@ -17,13 +17,13 @@ module.exports = {
 		  let island = null
 		  if(Math.random() > 0.5) {
 			island = new PlayerIsland({
-			  x: (j*this.chunkSize + Math.random()*this.chunkSize)*this.tileSize,
-			  y: (i*this.chunkSize + Math.random()*this.chunkSize)*this.tileSize
+			  x: (j*this.chunkSize + ((Math.random()*0.7)+0.1)*this.chunkSize)*this.tileSize,
+			  y: (i*this.chunkSize + ((Math.random()*0.7)+0.1)*this.chunkSize)*this.tileSize
 			})
 		  } else {
 			island = new WoodIsland({
-			  x: (j*this.chunkSize + Math.random()*this.chunkSize)*this.tileSize,
-			  y: (i*this.chunkSize + Math.random()*this.chunkSize)*this.tileSize
+			  x: (j*this.chunkSize + ((Math.random()*0.7)+0.1)*this.chunkSize)*this.tileSize,
+			  y: (i*this.chunkSize + ((Math.random()*0.7)+0.1)*this.chunkSize)*this.tileSize
 			})
 		  }
         

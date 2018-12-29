@@ -25,6 +25,11 @@ class Inventory {
 			return;
 		}
 	}
+	removeItems(item,amount) {
+		for(var i = 0; i < amount; i++) {
+			this.removeItem(item)
+		}
+	}
 	hasItem(item) {
 		const ref = this.items.find((obj) => obj.item.name === item.name)
 		if(ref) {

@@ -8,10 +8,11 @@ class WoodShip extends Ship {
   constructor(params) {
     super(params)
     
-	this.dockingDistance = 50;
-	this.inventory = new Inventory()
-	this.capacity = 200
-    this.className = 'WoodShip'
+		this.dockingDistance = 50;
+		this.inventory = new Inventory()
+		this.capacity = 200
+		this.className = 'WoodShip'
+		//console.log(GameObject.list.find(go => go.id === this.id))
     this.sendInitPack();
   }
   getInitPack() {
@@ -23,8 +24,9 @@ class WoodShip extends Ship {
       className: this.className,
       maxHealth: this.maxHealth,
       health: this.health,
-	  inventory: this.inventory,
-	  capacity: this.capacity
+			inventory: this.inventory,
+			docked: this.docked,
+	  	capacity: this.capacity
     }
   }
   getUpdatePack() {
@@ -33,8 +35,9 @@ class WoodShip extends Ship {
       x: this.x,
       y: this.y,
       rotation: this.rotation,
-      health: this.health,
-	  inventory: this.inventory
+			health: this.health,
+			docked: this.docked,
+	 		inventory: this.inventory
     }
   }
   update() {
@@ -46,7 +49,8 @@ class WoodShip extends Ship {
 			this.load(nearestIsland)
 		  }
 		  
-	  }*/
+		}*/
+		//console.log(GameObject.list.find(go => go.id === this.id))
   }
   load(island) {
 	  if(this.inventory.items.length > 0) {

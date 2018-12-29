@@ -28,9 +28,9 @@ const render =  {
       ['islandBottomLeft',[0,128]],
       ['islandBottomMiddle',[64,128]],
       ['islandBottomRight',[128,128]],
-	  ['bigTree',[384,256]],
-	  ['smallTree',[448,256]],
-	  ['smallTrees',[448,320]],
+      ['bigTree',[384,256]],
+      ['smallTree',[448,256]],
+      ['smallTrees',[448,320]],
       ])
 
   },

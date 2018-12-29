@@ -5,6 +5,7 @@ const StartupShip = require('./StartupShip')
 const ExplorerShip = require('./ExplorerShip')
 const WoodShip = require('./WoodShip')
 const TradeRoute = require('./TradeRoute')
+const Dock = require('./Dock')
 
 class Player extends GameObject {
   constructor(params) {
@@ -22,7 +23,7 @@ class Player extends GameObject {
     this.controlling = {id:null}
     this.ships = []
     this.island = null;
-	this.tradeRoutes = [];
+	  this.tradeRoutes = [];
 
     this.className = 'Player'
     this.p = null
@@ -45,19 +46,19 @@ class Player extends GameObject {
       return
     }
     const island = GameObject.fromID(islandID)
-	if(!island.claimable) {
-		return
-	}
-    island.setOwnerID(this.id)
-    this.island = island
-	
-	//replace startup ship with explorer
-	const {x,y} = this.ships[0]
-	GameObject.remove(this.ships[0])
-	this.ships = []
-	this.ships.push(new ExplorerShip({x:x,y:y,parentID:this.id}))
-	this.ships.push(new WoodShip({x:x+100,y:y+100,parentID:this.id}))
-	this.setShipControl(0)
+    if(!island.claimable) {
+      return
+    }
+      island.setOwnerID(this.id)
+      this.island = island
+    
+    //replace startup ship with explorer
+    const {x,y} = this.ships[0]
+    GameObject.remove(this.ships[0])
+    this.ships = []
+    this.ships.push(new ExplorerShip({x:this.island.x + 80,y:this.island.y - 50,parentID:this.id}))
+    this.ships.push(new WoodShip({x:this.island.x + 80,y:this.island.y + 270,parentID:this.id}))
+    this.setShipControl(0)
   }
   openTradeRoute(islandID) {
 	  const island = GameObject.fromID(islandID)
@@ -80,6 +81,21 @@ class Player extends GameObject {
 	  if(ship.parentID === this.id) {
 		  ship.unload(this.island)
 	  }
+  }
+  createDock(islandID) {
+    const island = GameObject.fromID(islandID)
+    if(!island.dock && island.ownerID === this.id && island.inventory.items[0].amount > 300) {
+      island.createDock()
+    }
+  }
+  dockShip({dockID, shipID}) {
+    const dock = GameObject.fromID(dockID)
+    const ship = GameObject.fromID(shipID)
+    dock.dockShip(ship)
+  }
+  undockShip(dockID) {
+    const dock = GameObject.fromID(dockID)
+    dock.undockShip()
   }
   handleInput({ inputId, state }) {
     if(inputId == 'up') {
@@ -132,7 +148,7 @@ class Player extends GameObject {
   }
   static onConnect(socket) {
     const p = new Player({socketId:socket.id})
-    const s = new StartupShip({x:100,y:100,parentID:p.id})
+    const s = new StartupShip({x:100 + Math.random()*2000,y:100,parentID:p.id})
     p.ships.push(s)
     p.setShipControl(p.ships.indexOf(s))
 
@@ -148,17 +164,29 @@ class Player extends GameObject {
       p.claimIsland(islandID)
     })
 	
-	socket.on('openTradeRoute',(islandID) => {
-		p.openTradeRoute(islandID)
-	})
-	
-	socket.on('loadShip', ({islandID,shipID}) => {
-		p.loadShip({islandID:islandID,shipID:shipID})
-	})
-	
-	socket.on('unloadShip', (shipID) => {
-	  p.unloadShip(shipID)
-	})
+    socket.on('openTradeRoute',(islandID) => {
+      p.openTradeRoute(islandID)
+    })
+
+    socket.on('loadShip', ({islandID,shipID}) => {
+      p.loadShip({islandID:islandID,shipID:shipID})
+    })
+
+    socket.on('unloadShip', (shipID) => {
+      p.unloadShip(shipID)
+    })
+
+    socket.on('createDock', (islandID) => {
+      p.createDock(islandID)
+    })
+
+    socket.on('dockShip', ({ship, dock}) => {
+      p.dockShip({shipID:ship,dockID:dock})
+    })
+
+    socket.on('undockShip', (dock) => {
+      p.undockShip(dock)
+    })
 
     socket.emit('selfId', p.id)
     socket.emit('init', GameObject.getAllInitPacks());
@@ -166,10 +194,16 @@ class Player extends GameObject {
   static onDisconnect({ id }) {
     const p = GameObject.fromSocketID(id)
 	//remove ships
-	Ship.removeAllOwnedByPlayer(p.id)
+	  Ship.removeAllOwnedByPlayer(p.id)
 	
     GameObject.remove(GameObject.fromSocketID(id))
     console.log(`Player ${p.name} has left the game`)
+  }
+  static exists({ id }) {
+    return GameObject.list.find((go) => go.id === id)
+  }
+  static nameTaken(username) {
+    return false
   }
 }
 module.exports = Player

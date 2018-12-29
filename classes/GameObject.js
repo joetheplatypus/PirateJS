@@ -7,6 +7,8 @@ class GameObject {
     this.vy = params.vy || 0;
     this.maxSpeed = params.maxSpeed || 0;
     this.speed = 0;
+    this.width = 0;
+    this.height = 0;
     this.rotation = params.rotation || 0;
     this.className = 'GameObject'
     GameObject.list.push(this)
@@ -20,6 +22,14 @@ class GameObject {
   }
   sendInitPack() {
     GameObject.initPack.push(this.getInitPack())
+  }
+  getBounds() {
+    return {
+      x:this.x,
+      y:this.y,
+      width:this.width,
+      height:this.height
+    }
   }
   getInitPack() {
     return {

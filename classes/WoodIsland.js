@@ -31,7 +31,8 @@ class WoodIsland extends Island {
 	  rotation: this.rotation,
 	  className: this.className,
 	  tradeRoutes: this.tradeRoutes,
-	  inventory: this.inventory
+		inventory: this.inventory,
+		
 	}
   }
   getUpdatePack() {

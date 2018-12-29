@@ -16,10 +16,10 @@ export default class WoodIsland extends GameObject {
 	this.inventory = params.inventory
   
     //this.debug = new GUITextNode({text:'wood island', focus:{x:this.x,y:this.y}})
-    this.tradeGUI = new GUIButton({text: 'Open Trade Route', focus:{x:this.x-30,y:this.y}, onclick:()=>{Player.socket.emit('openTradeRoute', this.id)}})
-    this.loadShipGUI = new GUIButton({text: 'Load Ship', focus:{x:this.x-10,y:this.y}, onclick:()=>{Player.socket.emit('loadShip', {islandID:this.id,shipID:GameObject.fromID(Player.selfID).controllingID})}})
+    this.tradeGUI = new GUIButton({text: 'Open Trade Route', focus:{x:this.x+34,y:this.y+64}, onclick:()=>{Player.socket.emit('openTradeRoute', this.id)}})
+    this.loadShipGUI = new GUIButton({text: 'Load Ship', focus:{x:this.x+54,y:this.y+64}, onclick:()=>{Player.socket.emit('loadShip', {islandID:this.id,shipID:GameObject.fromID(Player.selfID).controllingID})}})
     //this.tradersGUI = new GUITextNode({text: '', focus:{x:this.x,y:this.y+10}})
-    this.productionGUI = new GUIResourceCounter({amount: '', img:'client/img/wood.png', focus:{x:this.x+125,y:this.y-60}})
+    this.productionGUI = new GUIResourceCounter({amount: '', img:'client/img/wood.png', focus:{x:this.x+189,y:this.y+4}})
     
   }
   update(params) {
@@ -74,24 +74,24 @@ export default class WoodIsland extends GameObject {
   }
     
   draw() {
-    Render.drawTilesheetImage(this.x - Render.tileSize, this.y - Render.tileSize, this.rotation, 'islandTopLeft', false)
-    Render.drawTilesheetImage(this.x - Render.tileSize, this.y - Render.tileSize, this.rotation, 'smallTrees', false)
-    Render.drawTilesheetImage(this.x, this.y - Render.tileSize, this.rotation, 'islandTopMiddle', false)
-    Render.drawTilesheetImage(this.x, this.y - Render.tileSize, this.rotation, 'smallTree', false)
-    Render.drawTilesheetImage(this.x + Render.tileSize, this.y - Render.tileSize, this.rotation, 'islandTopRight', false)
-    Render.drawTilesheetImage(this.x + Render.tileSize, this.y - Render.tileSize, this.rotation, 'smallTrees', false)
-    Render.drawTilesheetImage(this.x - Render.tileSize, this.y, this.rotation, 'islandMidLeft', false)
-    Render.drawTilesheetImage(this.x - Render.tileSize, this.y, this.rotation, 'smallTree', false)
-    Render.drawTilesheetImage(this.x, this.y, this.rotation, 'islandMidMiddle', false)
-    Render.drawTilesheetImage(this.x, this.y, this.rotation, 'bigTree', false)
-    Render.drawTilesheetImage(this.x + Render.tileSize, this.y, this.rotation, 'islandMidRight', false)
+    Render.drawTilesheetImage(this.x, this.y, this.rotation, 'islandTopLeft', false)
+    Render.drawTilesheetImage(this.x, this.y, this.rotation, 'smallTrees', false)
+    Render.drawTilesheetImage(this.x + Render.tileSize, this.y, this.rotation, 'islandTopMiddle', false)
     Render.drawTilesheetImage(this.x + Render.tileSize, this.y, this.rotation, 'smallTree', false)
-    Render.drawTilesheetImage(this.x - Render.tileSize, this.y + Render.tileSize, this.rotation, 'islandBottomLeft', false)
-    Render.drawTilesheetImage(this.x - Render.tileSize, this.y + Render.tileSize, this.rotation, 'smallTrees', false)
-    Render.drawTilesheetImage(this.x, this.y + Render.tileSize, this.rotation, 'islandBottomMiddle', false)
+    Render.drawTilesheetImage(this.x + 2*Render.tileSize, this.y, this.rotation, 'islandTopRight', false)
+    Render.drawTilesheetImage(this.x + 2*Render.tileSize, this.y, this.rotation, 'smallTrees', false)
+    Render.drawTilesheetImage(this.x, this.y + Render.tileSize, this.rotation, 'islandMidLeft', false)
     Render.drawTilesheetImage(this.x, this.y + Render.tileSize, this.rotation, 'smallTree', false)
-    Render.drawTilesheetImage(this.x + Render.tileSize, this.y + Render.tileSize, this.rotation, 'islandBottomRight', false)
-    Render.drawTilesheetImage(this.x + Render.tileSize, this.y + Render.tileSize, this.rotation, 'smallTrees', false)
+    Render.drawTilesheetImage(this.x + Render.tileSize, this.y + Render.tileSize , this.rotation, 'islandMidMiddle', false)
+    Render.drawTilesheetImage(this.x + Render.tileSize, this.y + Render.tileSize, this.rotation, 'bigTree', false)
+    Render.drawTilesheetImage(this.x + 2*Render.tileSize, this.y + Render.tileSize, this.rotation, 'islandMidRight', false)
+    Render.drawTilesheetImage(this.x + 2*Render.tileSize, this.y + Render.tileSize, this.rotation, 'smallTree', false)
+    Render.drawTilesheetImage(this.x, this.y + 2*Render.tileSize, this.rotation, 'islandBottomLeft', false)
+    Render.drawTilesheetImage(this.x, this.y + 2*Render.tileSize, this.rotation, 'smallTrees', false)
+    Render.drawTilesheetImage(this.x + Render.tileSize, this.y + 2*Render.tileSize, this.rotation, 'islandBottomMiddle', false)
+    Render.drawTilesheetImage(this.x + Render.tileSize, this.y + 2*Render.tileSize, this.rotation, 'smallTree', false)
+    Render.drawTilesheetImage(this.x + 2*Render.tileSize, this.y + 2*Render.tileSize, this.rotation, 'islandBottomRight', false)
+    Render.drawTilesheetImage(this.x + 2*Render.tileSize, this.y + 2*Render.tileSize, this.rotation, 'smallTrees', false)
     
   }
 }

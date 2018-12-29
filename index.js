@@ -8,6 +8,7 @@ const Settings = require('./settings')
 const GameObject = require('./classes/GameObject')
 const Player = require('./classes/Player')
 const Map = require('./classes/Map')
+const CollisionManager = require('./classes/CollisionManager')
 
 //Web Server
 //serve client index page on index
@@ -29,11 +30,29 @@ io.sockets.on('connection',(socket)=>{
 
   //setup events
   socket.on('disconnect',()=>{
-    Player.onDisconnect(socket)
+    if(Player.exists(socket)) {
+      Player.onDisconnect(socket)
+    }
   })
 
+  socket.on('signIn', function(data){
+		 
+  if(Player.nameTaken(data.username)) {
+    socket.emit('signInResponse', {success:false,name:data.username});
+    return;
+  }
+		
+		
+		
+    socket.emit('signInResponse', {success:true});
+
+  // if(SOCKET_LIST.length > 1) {
+  //   return
+  // }
   //initialise player
-  Player.onConnect(socket)
+    Player.onConnect(socket)
+
+  })
 
 })
 
@@ -42,6 +61,8 @@ Map.generateIslands()
 
 //Game Loop
 setInterval(()=>{
+ 
+  CollisionManager.checkCollisions(GameObject.list, 500, CollisionManager.rectifyCollision)
   GameObject.updateAll();
   const dataPacks = GameObject.getFrameUpdateData();
   SOCKET_LIST.map((socket)=>{

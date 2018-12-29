@@ -1,6 +1,6 @@
-const GameObject = require('./GameObject');
+const RigidBody = require('./RigidBody');
 
-class Entity extends GameObject {
+class Entity extends RigidBody {
   constructor(params) {
     super(params);
     this.maxHealth = params.maxHealth || 100;

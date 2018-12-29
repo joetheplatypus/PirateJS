@@ -10,9 +10,13 @@ class Ship extends Entity {
     this.brakingForce = 0.12
     this.maxAcceleration = 0.03;
     this.maxRotationSpeed = 0.07;
+    this.docked = false
 
     this.acceleration = 0;
     this.rotationSpeed = 0;
+
+    this.width = 45
+    this.height = 45
 
     this.input = {
       up: false,
@@ -26,6 +30,9 @@ class Ship extends Entity {
 
   }
   update() {
+    if(this.docked) {
+      return
+    }
     //movement
     if(this.input.up && this.input.down) {
       if(this.speed > 0) {
@@ -113,8 +120,38 @@ class Ship extends Entity {
 
     super.update();
   }
+  getInitPack() {
+    return {
+      id: this.id,
+      x: this.x,
+      y: this.y,
+      rotation: this.rotation,
+      className: this.className,
+      maxHealth: this.maxHealth,
+      health: this.health,
+      docked: this.docked,
+      width: this.width,
+		  height: this.height
+    }
+  }
+  getUpdatePack() {
+    return {
+      id: this.id,
+      x: this.x,
+      y: this.y,
+      rotation: this.rotation,
+      health: this.health,
+      docked: this.docked
+    }
+  }
   onDeath() {
     
+  }
+  load(island) {
+
+  }
+  unload(island) {
+
   }
   setInput(input) {
     this.input.up = input.up
@@ -123,10 +160,17 @@ class Ship extends Entity {
     this.input.right = input.right
   }
   static removeAllOwnedByPlayer(id) {
+    //console.log(GameObject.list.find(go => go.className === 'WoodShip'))
 	  for(var i = 0; i < GameObject.list.length; i++) {
+      if(GameObject.list[i].className == "WoodShip") {
+       // console.log(GameObject.list[i])
+      }
 		  if(!(GameObject.list[i] instanceof Ship)) {
+        //console.log(GameObject.list[i].className)
 			  continue;
-		  }
+		  } else {
+        //console.log(GameObject.list[i].className)
+      }
 		  if(GameObject.list[i].parentID === id) {
 			  GameObject.remove(GameObject.list[i])
 		  }

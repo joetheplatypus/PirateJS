@@ -12,7 +12,14 @@
     <div id="UI" style="z-index:2">
       <div id="ui-ships" style="position: absolute; top:10px; right: 50px; z-index:2"></div>
     </div>
-    <canvas id="gameCanvas" style="position: absolute"/>
+    <canvas id="gameCanvas" style="position: absolute; display: none"></canvas>
+    <div id="login">
+      <form action="javascript:void(0);">
+        <p>Username: </p><input id="signDiv-username" type="text" autocomplete="off" autofocus></input>
+        <p id="loginMessage" style="font-size:15px;color:red;"></p>
+        <button id="signInJoin">JOIN</button>
+      </form>
+    </div>
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script type="module" src="/client/index.js"></script>
   </body>

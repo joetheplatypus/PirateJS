@@ -25,6 +25,9 @@ export default class WoodShip extends Ship {
 	  }
   }
   draw() {
+		if(this.docked) {
+      return
+    }
     Render.drawSpritesheetImage(this.x, this.y, this.rotation - Math.PI/2, 'woodShip', true)
   }
 }

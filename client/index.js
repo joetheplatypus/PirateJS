@@ -9,9 +9,10 @@ import ExplorerShip from './classes/ExplorerShip.js'
 import WoodShip from './classes/WoodShip.js'
 import PlayerIsland from './classes/PlayerIsland.js';
 import WoodIsland from './classes/WoodIsland.js';
+import Dock from './classes/Dock.js';
 import GUI from './classes/GUI.js';
 
-const classMap = new Map([['Player', Player],['Ship', Ship],['PlayerIsland', PlayerIsland],['WoodIsland', WoodIsland],['StartupShip', StartupShip],['ExplorerShip', ExplorerShip],['WoodShip', WoodShip]])
+const classMap = new Map([['Player', Player],['Ship', Ship],['PlayerIsland', PlayerIsland],['WoodIsland', WoodIsland],['StartupShip', StartupShip],['ExplorerShip', ExplorerShip],['WoodShip', WoodShip],['Dock',Dock]])
 
 //Socket Setup
 const socket = io();
@@ -29,6 +30,25 @@ function resize() {
 resize()
 Render.setCTX(canvas.getContext('2d'))
 
+//signing in
+let inGame = false
+
+document.getElementById('signInJoin').onclick = function () {
+  const username = document.getElementById('signDiv-username').value;
+  socket.emit('signIn', {username:username});
+}
+
+socket.on('signInResponse', function(data) {
+  if(data.success) {
+    document.getElementById('login').style.display = 'none';
+    document.getElementById('gameCanvas').style.display = 'inline-block';
+    inGame = true
+  } else {
+    var box = document.getElementById("loginMessage");
+    box.innerHTML = "The username " + data.name + " is already taken";
+  }
+});
+
 //Data Packs
 
 socket.on('selfId',(id) => {
@@ -38,6 +58,9 @@ socket.on('selfId',(id) => {
 });
 
 socket.on('init',(data) => {
+  if(!inGame) {
+    return
+  }
   data.map((obj) => {
     if(!GameObject.fromID(obj.id)) {
 		
@@ -48,12 +71,18 @@ socket.on('init',(data) => {
 })
 
 socket.on('update',(data) => {
+  if(!inGame) {
+    return
+  }
   data.map((obj) => {
     GameObject.updateObject(obj)
   })
 })
 
 socket.on('remove',(data) => {
+  if(!inGame) {
+    return
+  }
   data.map((id) => {
     GameObject.remove(id)
   })
@@ -74,6 +103,9 @@ const input = {
 }
 
 document.onkeydown = function(event) {
+  if(!inGame) {
+    return
+  }
   if(event.keyCode === 68 && !input.right) { // D
 	input.right = true;
     socket.emit('keyPress', {inputId:'right',state:true});
@@ -96,6 +128,9 @@ document.onkeydown = function(event) {
 }
 
 document.onkeyup = function(event) {
+  if(!inGame) {
+    return
+  }
   if(event.keyCode === 68 && input.right) { // D
 	input.right = false
     socket.emit('keyPress', {inputId:'right',state:false});
@@ -118,6 +153,9 @@ document.onkeyup = function(event) {
 }
 
 document.onmousemove = (event) => {
+  if(!inGame) {
+    return
+  }
   const coords = Camera.relativeToAbsolute({x:event.clientX,y:event.clientY})
   GameObject.mouseHoverCheck(coords)
 }
@@ -125,11 +163,14 @@ document.onmousemove = (event) => {
 
 //Game Loop
 function loop(ts) {
-  Render.ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
-  Render.ctx.fillStyle = 'lightblue'
-  Render.ctx.fillRect(0,0,window.innerWidth,window.innerHeight);
-  GameObject.drawAll();
-  GUI.updateAll()
+  if(inGame) {
+    Render.ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
+    Render.ctx.fillStyle = 'lightblue'
+    Render.ctx.fillRect(0,0,window.innerWidth,window.innerHeight);
+    GameObject.drawAll();
+    GUI.updateAll()
+  }
+  
 
 
   requestAnimationFrame(loop)
