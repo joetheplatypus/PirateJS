@@ -4,6 +4,7 @@ import GameObject from './GameObject.js';
 import Player from './Player.js';
 import GUITextNode from './GUITextNode.js';
 import GUIButton from './GUIButton.js';
+import GUIResourceCounter from './GUIResourceCounter.js'
 import Camera from './Camera.js'
 
 export default class PlayerIsland extends GameObject {
@@ -13,10 +14,11 @@ export default class PlayerIsland extends GameObject {
     this.ownerID = params.ownerID
 	this.inventory = params.inventory
   
-    this.ownerGUI = new GUITextNode({text:null, focus:{x:this.x,y:this.y}})
-    this.claimGUI = new GUIButton({text: 'claim', focus:{x:this.x,y:this.y}, onclick:()=>{Player.socket.emit('claimIsland', this.id)}})
-    this.unloadShipGUI = new GUIButton({text: 'Unload Ship', focus:{x:this.x,y:this.y+40}, onclick:()=>{Player.socket.emit('unloadShip', GameObject.fromID(Player.selfID).controllingID)}})
-	this.inventoryGUI = new GUITextNode({text: '', focus:{x:this.x,y:this.y-20}})
+    this.ownerGUI = new GUITextNode({text:null, focus:{x:this.x-90,y:this.y-90}})
+    this.claimGUI = new GUIButton({text: 'Claim Island', focus:{x:this.x-20,y:this.y}, onclick:()=>{Player.socket.emit('claimIsland', this.id)}})
+    this.unloadShipGUI = new GUIButton({text: 'Unload Ship', focus:{x:this.x-10,y:this.y}, onclick:()=>{Player.socket.emit('unloadShip', GameObject.fromID(Player.selfID).controllingID)}})
+	this.inventoryWoodGUI = new GUIResourceCounter({amount: '', img:'client/img/wood.png', focus:{x:this.x+125,y:this.y-60}})
+	//this.inventoryGUI = new GUITextNode({text: '', focus:{x:this.x,y:this.y-20}})
   }
   update(params) {
     super.update(params)
@@ -48,10 +50,13 @@ export default class PlayerIsland extends GameObject {
     }
 	
 	if(Camera.isOnScreen(this) && this.inventory.items.length > 0) {
-		  this.inventoryGUI.setText(this.inventory.items[0].item.name + ': ' + this.inventory.items[0].amount)
-		  this.inventoryGUI.show()
+		  //this.inventoryGUI.setText(this.inventory.items[0].item.name + ': ' + this.inventory.items[0].amount)
+		  //this.inventoryGUI.show()
+		  this.inventoryWoodGUI.setAmount(this.inventory.items[0].amount)
+		  this.inventoryWoodGUI.show()
 	  } else {
-		  this.inventoryGUI.hide()
+		  //this.inventoryGUI.hide()
+		  this.inventoryWoodGUI.hide()
 	  }
   }
   draw() {

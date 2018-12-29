@@ -16,8 +16,8 @@ export default class WoodIsland extends GameObject {
 	this.inventory = params.inventory
   
     //this.debug = new GUITextNode({text:'wood island', focus:{x:this.x,y:this.y}})
-    this.tradeGUI = new GUIButton({text: 'Open Trade Route', focus:{x:this.x,y:this.y}, onclick:()=>{Player.socket.emit('openTradeRoute', this.id)}})
-    this.loadShipGUI = new GUIButton({text: 'Load Ship', focus:{x:this.x,y:this.y+35}, onclick:()=>{Player.socket.emit('loadShip', {islandID:this.id,shipID:GameObject.fromID(Player.selfID).controllingID})}})
+    this.tradeGUI = new GUIButton({text: 'Open Trade Route', focus:{x:this.x-30,y:this.y}, onclick:()=>{Player.socket.emit('openTradeRoute', this.id)}})
+    this.loadShipGUI = new GUIButton({text: 'Load Ship', focus:{x:this.x-10,y:this.y}, onclick:()=>{Player.socket.emit('loadShip', {islandID:this.id,shipID:GameObject.fromID(Player.selfID).controllingID})}})
     //this.tradersGUI = new GUITextNode({text: '', focus:{x:this.x,y:this.y+10}})
     this.productionGUI = new GUIResourceCounter({amount: '', img:'client/img/wood.png', focus:{x:this.x+125,y:this.y-60}})
     

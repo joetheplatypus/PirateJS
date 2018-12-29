@@ -7,6 +7,7 @@ export default class GUITextNode extends GUI {
     this.div = document.createElement('div')
     this.textNode = document.createTextNode(params.text)
     this.div.appendChild(this.textNode)
+	this.div.style.fontFamily = 'monospace'
     this.div.style.position = 'absolute'
     this.div.style.zIndex = 2
   }

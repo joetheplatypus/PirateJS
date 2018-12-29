@@ -49,7 +49,6 @@ class WoodShip extends Ship {
 	  }*/
   }
   load(island) {
-	  console.log('load')
 	  if(this.inventory.items.length > 0) {
 		  if(this.inventory.items[0].amount >= this.capacity) {
 			  return
@@ -67,7 +66,6 @@ class WoodShip extends Ship {
 	  for(var i = 0; i < this.inventory.items.length; i++) {
 		  const amount = this.inventory.items[i].amount
 		  for(var j = 0; j < amount; j++) {
-			  console.log(j)
 			  this.inventory.removeItem(Item.wood)
 			  island.inventory.addItem(Item.wood)
 		  }
