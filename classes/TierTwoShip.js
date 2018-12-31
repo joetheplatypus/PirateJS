@@ -4,15 +4,15 @@ const Inventory = require('./Inventory')
 const GameObject = require('./GameObject')
 const Item = require('./Item')
 
-class TierOneShip extends ResourceShip {
+class TierTwoShip extends ResourceShip {
   constructor(params) {
     super(params)
     
-    this.capacity = new Map([[Item.wood, 200],[Item.stone, 0]])
-    this.tier = 1;
-		this.className = 'TierOneShip'
+    this.capacity = new Map([[Item.wood, 400],[Item.stone, 100]])
+    this.tier = 2;
+		this.className = 'TierTwoShip'
     this.sendInitPack();
   }
 }
 
-module.exports = TierOneShip
+module.exports = TierTwoShip

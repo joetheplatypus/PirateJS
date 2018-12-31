@@ -6,7 +6,7 @@ import GUITextNode from './GUITextNode.js'
 import Inventory from './Inventory.js'
 import Item from './Item.js'
 
-export default class TierOneShip extends ResourceShip {
+export default class TierTwoShip extends ResourceShip {
   constructor(params) {
     super(params)
 		this.inventory = new Inventory(params.inventory.items)
@@ -31,6 +31,6 @@ export default class TierOneShip extends ResourceShip {
 		if(this.docked) {
       return
     }
-    Render.drawSpritesheetImage(this.x, this.y, this.rotation - Math.PI/2, 'tierOneShip', true)
+    Render.drawSpritesheetImage(this.x, this.y, this.rotation - Math.PI/2, 'tierTwoShip', true)
   }
 }

@@ -19,7 +19,7 @@ export default class PlayerIsland extends GameObject {
     this.height = params.height
     this.width = params.width
   
-    this.ownerGUI = new GUITextNode({text:null, focus:{x:this.x-26,y:this.y-26}})
+    this.ownerGUI = new GUITextNode({text:null, focus:{x:this.x+50,y:this.y-26}})
     this.claimGUI = new GUIButton({text: 'Claim Island', focus:{x:this.x+44,y:this.y+64}, onclick:()=>{Player.socket.emit('claimIsland', this.id)}})
     this.unloadShipGUI = new GUIButton({text: 'Unload Ship', focus:{x:this.x+54,y:this.y+64}, onclick:()=>{Player.socket.emit('unloadShip', GameObject.fromID(Player.selfID).controllingID)}})
 	  this.inventoryWoodGUI = new GUIResourceCounter({amount: '', img:'client/img/wood.png', focus:{x:this.x+189,y:this.y+4}})
@@ -34,7 +34,8 @@ export default class PlayerIsland extends GameObject {
 
     if(this.getDistanceToPoint(GameObject.fromID(GameObject.fromID(Player.selfID).controllingID)) < GUI.showDist ) {
       if(this.ownerID) {
-        this.ownerGUI.setText(`Owned by player ${this.ownerID}`)
+        const ownerName = GameObject.fromID(this.ownerID).name
+        this.ownerGUI.setText(`Owned by ${ownerName}`)
         this.ownerGUI.show();
         this.claimGUI.hide();
         if(this.ownerID === Player.selfID) {

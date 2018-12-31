@@ -16,7 +16,8 @@ const render =  {
       ['cannon',[88,422, 29, 16]],
       ['explorerShip',[628,166,16,26]],
       ['startupShip',[408,0,66,113]],
-      ['woodShip',[612,0,40,108]],
+      ['tierOneShip',[612,0,40,108]],
+      ['tierTwoShip',[596,316,50,108]],
     ]),
     tiles: new Map([
       ['islandTopLeft',[0,0]],

@@ -50,7 +50,7 @@ io.sockets.on('connection',(socket)=>{
   //   return
   // }
   //initialise player
-    Player.onConnect(socket)
+    Player.onConnect(socket, data.username)
 
   })
 

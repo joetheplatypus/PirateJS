@@ -5,13 +5,16 @@ import Player from './Player.js'
 export default class GUIDockMenu extends GUI {
   constructor(params) {
     super(params)
-    this.repairShip = new GUIButton({text: 'Repair Ship', focus:{x:params.focus.x, y:params.focus.y}, onclick:()=>{}})
-    this.createShip = new GUIButton({text: 'Create Ship', focus:{x:params.focus.x, y:params.focus.y+30}, onclick:()=>{}})
-    this.upgradeShip = new GUIButton({text: 'Upgrade Ship', focus:{x:params.focus.x, y:params.focus.y+60}, onclick:()=>{}})
-    this.upgradeDock = new GUIButton({text: 'Upgrade Dock', focus:{x:params.focus.x, y:params.focus.y+90}, onclick:()=>{}})
+    this.dockID = params.dockID
+    this.repairShip = new GUIButton({text: 'Repair Ship', focus:{x:params.focus.x, y:params.focus.y}, onclick:()=>{Player.socket.emit('repairShip', params.dockID)}})
+    this.createShip = new GUIButton({text: 'Create Ship', focus:{x:params.focus.x, y:params.focus.y+30}, onclick:()=>{Player.socket.emit('createShip', params.dockID)}})
+    this.upgradeShip = new GUIButton({text: 'Upgrade Ship', focus:{x:params.focus.x, y:params.focus.y+60}, onclick:()=>{Player.socket.emit('upgradeShip', params.dockID)}})
+    this.upgradeDock = new GUIButton({text: 'Upgrade Dock', focus:{x:params.focus.x, y:params.focus.y+90}, onclick:()=>{Player.socket.emit('upgradeDock', params.dockID)}})
 
-    this.createShip.disable();
-    this.repairShip.disable()
+    this.repairShip.disable();
+    this.createShip.disable()
+    this.upgradeShip.disable()
+    this.upgradeDock.disable()
 
   }
   hide() {

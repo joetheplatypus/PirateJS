@@ -8,15 +8,15 @@ export default class Player extends GameObject{
     this.controllingID = params.controllingID
     this.ships = params.ships
     this.island = params.island
-	this.tradeRoutes = params.tradeRoutes
-
+    this.tradeRoutes = params.tradeRoutes
+    this.name = params.name
   }
   update(params) {
     super.update(params);
     this.controllingID = params.controllingID
     this.ships = params.ships
     this.island = params.island
-	this.tradeRoutes = params.tradeRoutes
+	  this.tradeRoutes = params.tradeRoutes
 
     if(this.id === Player.selfID) {
       if(this.controllingID) {

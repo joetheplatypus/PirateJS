@@ -7,7 +7,7 @@ import GUIResourceCounter from './GUIResourceCounter.js';
 import GUIButton from './GUIButton.js';
 import Camera from './Camera.js'
 import ExplorerShip from './ExplorerShip.js'
-import TierOneShip from './TierOneShip.js'
+import ResourceShip from './ResourceShip.js'
 import Inventory from './Inventory.js'
 import Item from './Item.js'
 
@@ -63,7 +63,7 @@ export default class StoneIsland extends GameObject {
 		  } else {
 			  this.tradeGUI.hide()
 		  }
-		  if(ship instanceof TierOneShip && selfTrading) {
+		  if(ship instanceof ResourceShip && selfTrading) {
 			  this.loadShipGUI.show()
 		  } else {
 			  this.loadShipGUI.hide()

@@ -7,13 +7,14 @@ import Ship from './classes/Ship.js'
 import StartupShip from './classes/StartupShip.js'
 import ExplorerShip from './classes/ExplorerShip.js'
 import TierOneShip from './classes/TierOneShip.js'
+import TierTwoShip from './classes/TierTwoShip.js'
 import PlayerIsland from './classes/PlayerIsland.js';
 import WoodIsland from './classes/WoodIsland.js';
 import Dock from './classes/Dock.js';
 import GUI from './classes/GUI.js';
 import StoneIsland from './classes/StoneIsland.js';
 
-const classMap = new Map([['Player', Player],['Ship', Ship],['PlayerIsland', PlayerIsland],['WoodIsland', WoodIsland],['StartupShip', StartupShip],['ExplorerShip', ExplorerShip],['TierOneShip', TierOneShip],['Dock',Dock],['StoneIsland', StoneIsland]])
+const classMap = new Map([['Player', Player],['Ship', Ship],['PlayerIsland', PlayerIsland],['WoodIsland', WoodIsland],['StartupShip', StartupShip],['ExplorerShip', ExplorerShip],['TierOneShip', TierOneShip],['TierTwoShip', TierTwoShip],['Dock',Dock],['StoneIsland', StoneIsland]])
 
 //Socket Setup
 const socket = io();

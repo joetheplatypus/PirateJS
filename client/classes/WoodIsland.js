@@ -63,7 +63,7 @@ export default class WoodIsland extends GameObject {
 		  } else {
 			  this.tradeGUI.hide()
 		  }
-		  if(ship instanceof TierOneShip && selfTrading) {
+		  if(ship.inventory && selfTrading) {
 			  this.loadShipGUI.show()
 		  } else {
 			  this.loadShipGUI.hide()

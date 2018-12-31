@@ -13,7 +13,7 @@ class Player extends GameObject {
     super(params)
     
     this.socketId = params.socketId;
-    this.name = `${this.id}`;
+    this.name = params.name;
     this.input = {
       up: false,
       down: false,
@@ -92,11 +92,47 @@ class Player extends GameObject {
   dockShip({dockID, shipID}) {
     const dock = GameObject.fromID(dockID)
     const ship = GameObject.fromID(shipID)
+    if(ship.parentID !== this.id) {
+      return
+    }
     dock.dockShip(ship)
   }
   undockShip(dockID) {
     const dock = GameObject.fromID(dockID)
+    if(dock.playerID !== this.id) {
+      return
+    }
     dock.undockShip()
+  }
+  repairShip(dockID) {
+    const dock = GameObject.fromID(dockID)
+    const ship = dock.dockedShip
+    if(ship.parentID !== this.id) {
+      return
+    }
+    dock.repairShip(ship)
+  }
+  upgradeShip(dockID) {
+    const dock = GameObject.fromID(dockID)
+    const ship = dock.dockedShip
+    if(ship.parentID !== this.id) {
+      return
+    }
+    dock.upgradeShip(ship)
+  }
+  createShip(dockID) {
+    const dock = GameObject.fromID(dockID)
+    if(dock.playerID !== this.id) {
+      return
+    }
+    dock.createShip()
+  }
+  upgradeDock(dockID) {
+    const dock = GameObject.fromID(dockID)
+    if(dock.playerID !== this.id) {
+      return
+    }
+    dock.upgrade()
   }
   handleInput({ inputId, state }) {
     if(inputId == 'up') {
@@ -135,7 +171,8 @@ class Player extends GameObject {
       controllingID: this.controlling.id,
       ships: this.ships,
       island: this.island,
-	  tradeRoutes: this.tradeRoutes
+      tradeRoutes: this.tradeRoutes,
+      name: this.name
     }
   }
   getUpdatePack() {
@@ -147,8 +184,8 @@ class Player extends GameObject {
 	  tradeRoutes: this.tradeRoutes
     }
   }
-  static onConnect(socket) {
-    const p = new Player({socketId:socket.id})
+  static onConnect(socket, name) {
+    const p = new Player({socketId:socket.id,name:name})
     const s = new StartupShip({x:100 + Math.random()*2000,y:100,parentID:p.id})
     p.ships.push(s)
     p.setShipControl(p.ships.indexOf(s))
@@ -181,12 +218,28 @@ class Player extends GameObject {
       p.createDock(islandID)
     })
 
-    socket.on('dockShip', ({ship, dock}) => {
+    socket.on('dockShip', ({dock, ship}) => {
       p.dockShip({shipID:ship,dockID:dock})
     })
 
     socket.on('undockShip', (dock) => {
       p.undockShip(dock)
+    })
+
+    socket.on('upgradeShip', (dock) => {
+      p.upgradeShip(dock)
+    })
+
+    socket.on('createShip', (dock) => {
+      p.createShip(dock)
+    })
+
+    socket.on('repairShip', (dock) => {
+      p.repairShip(dock)
+    })
+
+    socket.on('upgradeDock', (dock) => {
+      p.upgradeDock(dock)
     })
 
     socket.emit('selfId', p.id)

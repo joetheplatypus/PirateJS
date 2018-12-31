@@ -1,4 +1,7 @@
 const GameObject = require('./GameObject')
+const Item = require('./Item')
+const TierOneShip = require('./TierOneShip')
+const TierTwoShip = require('./TierTwoShip')
 
 class Dock extends GameObject{
   constructor(island) {
@@ -19,7 +22,8 @@ class Dock extends GameObject{
       y: this.y,
       rotation: this.rotation,
       className: this.className,
-      dockedShip: this.dockedShip
+      dockedShip: this.dockedShip,
+      islandID: this.islandID
     }
   }
   getUpdatePack() {
@@ -28,7 +32,7 @@ class Dock extends GameObject{
       x: this.x,
       y: this.y,
       rotation: this.rotation,
-      dockedShip: this.dockedShip
+      dockedShip: this.dockedShip,
     }
   }
   dockShip(ship) {
@@ -43,6 +47,33 @@ class Dock extends GameObject{
   undockShip() {
     this.dockedShip.docked = false
     this.dockedShip = null
+  }
+  upgrade() {
+
+  }
+  upgradeShip(ship) {
+    const owner = GameObject.fromID(this.playerID)
+    const island = owner.island
+    if(ship instanceof TierOneShip) {
+      if(island.inventory.amountOfItem(Item.wood) >= 500) {
+        island.inventory.removeItems(Item.wood, 500)
+
+        const newShip = new TierTwoShip({x:ship.x,y:ship.y,parentID:this.playerID})
+        this.undockShip(ship)
+        GameObject.remove(ship)
+
+        this.dockShip(newShip)
+        owner.ships[owner.ships.indexOf(ship)] = newShip
+        owner.controlling = newShip
+        
+      }
+    }
+  }
+  createShip() {
+
+  }
+  repairShip(ship) {
+
   }
 }
 
