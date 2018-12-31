@@ -3,22 +3,25 @@ import Render from './Render.js'
 import Camera from './Camera.js'
 import Player from './Player.js'
 import GUITextNode from './GUITextNode.js'
+import Inventory from './Inventory.js'
+import Item from './Item.js'
 
-export default class WoodShip extends Ship {
+export default class TierOneShip extends Ship {
   constructor(params) {
     super(params)
-	this.inventory = params.inventory
-	this.capacity = params.capacity
+		this.inventory = new Inventory(params.inventory.items)
+		this.capacity = params.capacity
 	
     this.inventoryGUI = new GUITextNode({text: '', focus:{x:this.x,y:this.y+20}})
   }
   update(params) {
 	  super.update(params)
-	  this.inventory = params.inventory
+	  this.inventory.update(params.inventory.items)
 	  
 	  if(Camera.isOnScreen(this) && this.inventory.items.length > 0) {
-		  this.inventoryGUI.updateFocus({x:this.x,y:this.y+20})
-		  this.inventoryGUI.setText(this.inventory.items[0].item.name + ': ' + this.inventory.items[0].amount)
+			const inventoryInfo = this.inventory.items.map((ref) => `${ref.item.name}: ${ref.amount}`)
+			this.inventoryGUI.updateFocus({x:this.x,y:this.y+20})
+		  this.inventoryGUI.setText(inventoryInfo.toString())
 		  this.inventoryGUI.show()
 	  } else {
 		  this.inventoryGUI.hide()

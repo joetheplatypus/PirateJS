@@ -29,4 +29,10 @@ export default class GUIButton extends GUI {
   setText(text) {
     this.button.innerText = text
   }
+  enable() {
+    this.button.className = ''
+  }
+  disable() {
+    this.button.className = 'disabled'
+  }
 }

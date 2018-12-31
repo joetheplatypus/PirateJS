@@ -11,7 +11,7 @@ import TierOneShip from './TierOneShip.js'
 import Inventory from './Inventory.js'
 import Item from './Item.js'
 
-export default class WoodIsland extends GameObject {
+export default class StoneIsland extends GameObject {
   constructor(params) {
     super(params);
 		this.tradeRoutes = params.tradeRoutes
@@ -44,7 +44,7 @@ export default class WoodIsland extends GameObject {
 		  
 		  
 		  if(selfTrading) {
-			  this.productionGUI.setAmount(this.inventory.amountOfItem(Item.wood))
+			  this.productionGUI.setAmount(this.inventory.amountOfItem(Item.stone))
 			  this.productionGUI.show()
 		  } else {
 			  this.productionGUI.hide()
@@ -77,23 +77,23 @@ export default class WoodIsland extends GameObject {
     
   draw() {
     Render.drawTilesheetImage(this.x, this.y, this.rotation, 'islandTopLeft', false)
-    Render.drawTilesheetImage(this.x, this.y, this.rotation, 'smallTrees', false)
+    Render.drawTilesheetImage(this.x, this.y, this.rotation, 'smallStone', false)
     Render.drawTilesheetImage(this.x + Render.tileSize, this.y, this.rotation, 'islandTopMiddle', false)
-    Render.drawTilesheetImage(this.x + Render.tileSize, this.y, this.rotation, 'smallTree', false)
+    Render.drawTilesheetImage(this.x + Render.tileSize, this.y, this.rotation, 'smallStone', false)
     Render.drawTilesheetImage(this.x + 2*Render.tileSize, this.y, this.rotation, 'islandTopRight', false)
-    Render.drawTilesheetImage(this.x + 2*Render.tileSize, this.y, this.rotation, 'smallTrees', false)
+    Render.drawTilesheetImage(this.x + 2*Render.tileSize, this.y, this.rotation, 'smallStone', false)
     Render.drawTilesheetImage(this.x, this.y + Render.tileSize, this.rotation, 'islandMidLeft', false)
-    Render.drawTilesheetImage(this.x, this.y + Render.tileSize, this.rotation, 'smallTree', false)
+    Render.drawTilesheetImage(this.x, this.y + Render.tileSize, this.rotation, 'smallStone', false)
     Render.drawTilesheetImage(this.x + Render.tileSize, this.y + Render.tileSize , this.rotation, 'islandMidMiddle', false)
-    Render.drawTilesheetImage(this.x + Render.tileSize, this.y + Render.tileSize, this.rotation, 'bigTree', false)
+    Render.drawTilesheetImage(this.x + Render.tileSize, this.y + Render.tileSize, this.rotation, 'bigStone', false)
     Render.drawTilesheetImage(this.x + 2*Render.tileSize, this.y + Render.tileSize, this.rotation, 'islandMidRight', false)
-    Render.drawTilesheetImage(this.x + 2*Render.tileSize, this.y + Render.tileSize, this.rotation, 'smallTree', false)
+    Render.drawTilesheetImage(this.x + 2*Render.tileSize, this.y + Render.tileSize, this.rotation, 'smallStone', false)
     Render.drawTilesheetImage(this.x, this.y + 2*Render.tileSize, this.rotation, 'islandBottomLeft', false)
-    Render.drawTilesheetImage(this.x, this.y + 2*Render.tileSize, this.rotation, 'smallTrees', false)
+    Render.drawTilesheetImage(this.x, this.y + 2*Render.tileSize, this.rotation, 'smallStone', false)
     Render.drawTilesheetImage(this.x + Render.tileSize, this.y + 2*Render.tileSize, this.rotation, 'islandBottomMiddle', false)
-    Render.drawTilesheetImage(this.x + Render.tileSize, this.y + 2*Render.tileSize, this.rotation, 'smallTree', false)
+    Render.drawTilesheetImage(this.x + Render.tileSize, this.y + 2*Render.tileSize, this.rotation, 'smallStone', false)
     Render.drawTilesheetImage(this.x + 2*Render.tileSize, this.y + 2*Render.tileSize, this.rotation, 'islandBottomRight', false)
-    Render.drawTilesheetImage(this.x + 2*Render.tileSize, this.y + 2*Render.tileSize, this.rotation, 'smallTrees', false)
+    Render.drawTilesheetImage(this.x + 2*Render.tileSize, this.y + 2*Render.tileSize, this.rotation, 'smallStone', false)
     
   }
 }

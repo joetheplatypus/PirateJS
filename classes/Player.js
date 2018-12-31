@@ -3,9 +3,10 @@ const GameObject = require('./GameObject')
 const Ship = require('./Ship')
 const StartupShip = require('./StartupShip')
 const ExplorerShip = require('./ExplorerShip')
-const WoodShip = require('./WoodShip')
+const TierOneShip = require('./TierOneShip')
 const TradeRoute = require('./TradeRoute')
 const Dock = require('./Dock')
+const Item = require('./Item')
 
 class Player extends GameObject {
   constructor(params) {
@@ -57,7 +58,7 @@ class Player extends GameObject {
     GameObject.remove(this.ships[0])
     this.ships = []
     this.ships.push(new ExplorerShip({x:this.island.x + 80,y:this.island.y - 50,parentID:this.id}))
-    this.ships.push(new WoodShip({x:this.island.x + 80,y:this.island.y + 270,parentID:this.id}))
+    this.ships.push(new TierOneShip({x:this.island.x + 80,y:this.island.y + 270,parentID:this.id}))
     this.setShipControl(0)
   }
   openTradeRoute(islandID) {
@@ -84,7 +85,7 @@ class Player extends GameObject {
   }
   createDock(islandID) {
     const island = GameObject.fromID(islandID)
-    if(!island.dock && island.ownerID === this.id && island.inventory.items[0].amount > 300) {
+    if(!island.dock && island.ownerID === this.id && island.inventory.amountOfItem(Item.wood) > 300) {
       island.createDock()
     }
   }

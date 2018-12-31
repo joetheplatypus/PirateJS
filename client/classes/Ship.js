@@ -8,7 +8,6 @@ export default class Ship extends Entity {
     this.docked = params.docked
     this.width = params.width
     this.height = params.height
-    console.log(this.width)
   }
   update(params) {
     super.update(params)

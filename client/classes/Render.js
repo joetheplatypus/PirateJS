@@ -31,6 +31,8 @@ const render =  {
       ['bigTree',[384,256]],
       ['smallTree',[448,256]],
       ['smallTrees',[448,320]],
+      ['smallStone',[0,192]],
+      ['bigStone',[64,192]],
       ])
 
   },

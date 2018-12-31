@@ -30,12 +30,17 @@ class Inventory {
 			this.removeItem(item)
 		}
 	}
-	hasItem(item) {
+	addItems(item, amount) {
+		for(var i = 0; i < amount; i++) {
+			this.addItem(item)
+		}
+	}
+	amountOfItem(item) {
 		const ref = this.items.find((obj) => obj.item.name === item.name)
 		if(ref) {
-			return true
+			return ref.amount
 		} else {
-			return false
+			return 0
 		}
 	}
 }

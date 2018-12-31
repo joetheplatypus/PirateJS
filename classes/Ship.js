@@ -162,7 +162,7 @@ class Ship extends Entity {
   static removeAllOwnedByPlayer(id) {
     //console.log(GameObject.list.find(go => go.className === 'WoodShip'))
 	  for(var i = 0; i < GameObject.list.length; i++) {
-      if(GameObject.list[i].className == "WoodShip") {
+      if(GameObject.list[i].className == "TierOneShip") {
        // console.log(GameObject.list[i])
       }
 		  if(!(GameObject.list[i] instanceof Ship)) {

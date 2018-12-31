@@ -5,10 +5,10 @@ export default class GUIResourceCounter extends GUI {
   constructor(params) {
     super(params)
     this.div = document.createElement('div')
-	this.div.id="resourceCounter"
+	  this.div.id="resourceCounter"
     this.textNode = document.createTextNode(params.amount)
-	this.img = document.createElement('img')
-	this.img.src = params.img
+	  this.img = document.createElement('img')
+	  this.img.src = params.img
     this.div.appendChild(this.img)
     this.div.appendChild(this.textNode)
     this.div.style.position = 'absolute'
